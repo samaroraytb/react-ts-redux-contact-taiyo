@@ -1,19 +1,24 @@
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch} from "react-redux";
 import { RxCrossCircled } from "react-icons/rx";
+import CreateContact from './CreateContact'
+import {changeCreateContactStatus} from '../redux/actions'
 
 const Contact = () => {
-  const selector = useSelector((rootReducer: any) => rootReducer.contactList);
-  const isContactAvailable = selector.contactList.length === 0;
+  const selectorObject = useSelector((rootReducer: any) => rootReducer.contactReducer);
+  const isContactAvailable = selectorObject.contactList.length === 0;
 
+  const isCreateFormClicked = selectorObject.isCreateContact
+
+  
+  const dispatchFn = useDispatch()
+  
   const renderNoContactAvailable = () => {
-    const [isShowCreateForm, updateStatusCreate]= useState(false)
-
     return (
       <div className="p-5 flex flex-col items-center h-[75vh] md:h-screen w-full justify-center text-[#36454F]">
         <button
           type="button"
           className="font-bold md:text-2xl text-1xl bg-[#00E8FF] px-[20px] py-[15px] rounded-[15px] hover:bg-[#f4544c] hover:text-white"
+          onClick={() => dispatchFn(changeCreateContactStatus())}
         >
           Create Contact
         </button>
@@ -29,12 +34,20 @@ const Contact = () => {
     );
   };
 
+  const createFormRender = () => {
+    return (<div className="md:w-full">
+      <CreateContact />
+    </div>)
+  }
+
   const contactListItem = () => {
     return <ul></ul>;
   };
 
   return (
-    <>{isContactAvailable ? renderNoContactAvailable() : contactListItem()}</>
+    <>{isCreateFormClicked ? createFormRender() : (
+      isContactAvailable ? renderNoContactAvailable() : contactListItem()
+    )}</>
   );
 };
 

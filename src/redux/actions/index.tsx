@@ -1,6 +1,7 @@
-export const addContact = () => {
+export const addContact = (props: any) => {
     return{
-        type: "CREATE"
+        type: "CREATE",
+        data: props
     }
 }
 
@@ -19,5 +20,11 @@ export const deleteContact = () => {
 export const saveContact = () => {
     return{
         type: "SAVE"
+    }
+}
+
+export const changeCreateContactStatus = () => {
+    return{
+        type: "CLICKEDCREATE"
     }
 }

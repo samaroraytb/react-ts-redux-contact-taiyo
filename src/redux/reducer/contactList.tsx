@@ -1,23 +1,29 @@
 interface Contact {
-  id: string
-  name: string;
-  email: string;
+  id: string;
+  firstName: string;
+  lastName: string;
 }
 
-interface State {
-  contactList: Contact[];
+interface ContactObject {
+  contactList: Contact[], 
+  isCreateContact: boolean
 }
 
-const initialState: State = {
-  contactList: []
-};
+const initialState: ContactObject = {
+  contactList: [],
+  isCreateContact: false
+}
 
-const contactListReducer = (state: State = initialState, action: any) => {
+
+const contactReducer = (state: ContactObject = initialState, action: any) => {
   switch (action.type) {
-    // add cases for different actions if needed
+    case 'CREATE':
+      return {...state,  contactList: [...state.contactList, action.data ] }
+    case 'CLICKEDCREATE':
+      return {...state, isCreateContact: !state.isCreateContact}
     default:
       return state;
   }
 };
 
-export default contactListReducer;
+export default contactReducer;
