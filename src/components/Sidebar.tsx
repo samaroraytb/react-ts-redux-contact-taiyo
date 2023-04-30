@@ -7,8 +7,8 @@ import { FaReact } from "react-icons/fa";
 const Sidebar = () => {
   return (
     <nav className="w-full md:max-w-[300px] bg-[#00E8FF] md:h-screen font-bold text-2xl md:p-[20px] py-[10px] px-[15px] text-[#36454F]">
-      <ul className="gap-y-5 flex md:block items-center justify-between">
-        <li>
+      <div className="gap-y-5 flex md:block items-center justify-between">
+        <div>
           <Link
             to="/"
             className="flex items-center text-[#f4544c] md:text-3xl md:mb-[20px]"
@@ -16,9 +16,9 @@ const Sidebar = () => {
             <FaReact className="mr-2" />
             <h1 className="mb-[5px]">React App</h1>
           </Link>
-        </li>
+        </div>
 
-        <div className="md:block flex items-center">
+        <ul className="md:block flex items-center">
           <li>
             <Link to="/" className="py-[20px] flex items-center hover:text-[#f4544c]">
               <AiOutlineHome className="mx-2" />
@@ -32,8 +32,8 @@ const Sidebar = () => {
               <h1 className="hidden md:flex">Charts and Maps</h1>
             </Link>
           </li>
-        </div>
-      </ul>
+        </ul>
+      </div>
     </nav>
   );
 };

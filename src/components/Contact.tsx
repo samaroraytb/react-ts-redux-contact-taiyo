@@ -1,17 +1,19 @@
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RxCrossCircled } from "react-icons/rx";
-import CreateContact from './CreateContact'
-import {changeCreateContactStatus} from '../redux/actions'
+import CreateContact from "./CreateContact";
+import { changeCreateContactStatus } from "../redux/actions";
+import ContactItems from "./ContactItems";
 
 const Contact = () => {
-  const selectorObject = useSelector((rootReducer: any) => rootReducer.contactReducer);
+  const selectorObject = useSelector(
+    (rootReducer: any) => rootReducer.contactReducer
+  );
   const isContactAvailable = selectorObject.contactList.length === 0;
 
-  const isCreateFormClicked = selectorObject.isCreateContact
+  const isCreateFormClicked = selectorObject.isCreateContact;
 
-  
-  const dispatchFn = useDispatch()
-  
+  const dispatchFn = useDispatch();
+
   const renderNoContactAvailable = () => {
     return (
       <div className="p-5 flex flex-col items-center h-[75vh] md:h-screen w-full justify-center text-[#36454F]">
@@ -35,19 +37,47 @@ const Contact = () => {
   };
 
   const createFormRender = () => {
-    return (<div className="md:w-full">
-      <CreateContact />
-    </div>)
-  }
+    return (
+      <div className="md:w-full">
+        <CreateContact />
+      </div>
+    );
+  };
 
   const contactListItem = () => {
-    return <ul></ul>;
+    return (
+      <div className="flex  flex-col md:h-screen md:w-full items-center">
+        <ul className="p-5 md:overflow-auto flex flex-wrap md:justify-start mb-[50px] md:mb-[100px] justify-center">
+          {selectorObject.contactList.map(
+            (eachItem: {
+              id: string;
+              firstName: string;
+              lastName: string;
+              status: string;
+            }) => (
+              <ContactItems key={eachItem.id} contactDetail={eachItem} />
+            )
+          )}
+        </ul>
+        <button
+          type="button"
+          className="fixed bottom-[20px] font-bold md:text-2xl text-1xl bg-[#00E8FF] px-[20px] py-[15px] rounded-[15px] hover:bg-[#f4544c] hover:text-white"
+          onClick={() => dispatchFn(changeCreateContactStatus())}
+        >
+          Create Contact
+        </button>
+      </div>
+    );
   };
 
   return (
-    <>{isCreateFormClicked ? createFormRender() : (
-      isContactAvailable ? renderNoContactAvailable() : contactListItem()
-    )}</>
+    <>
+      {isCreateFormClicked
+        ? createFormRender()
+        : isContactAvailable
+        ? renderNoContactAvailable()
+        : contactListItem()}
+    </>
   );
 };
 
