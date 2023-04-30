@@ -5,26 +5,29 @@ export const addContact = (props: any) => {
     }
 }
 
-export const editContact = () => {
+export const editContact = (props: {}) => {
     return{
-        type: "EDITING"
+        type: "EDITING",
+        data: props
     }
 }
 
-export const deleteContact = () => {
+export const deleteContact = (props: string) => {
     return{
-        type: "DELETE"
-    }
-}
-
-export const saveContact = () => {
-    return{
-        type: "SAVE"
+        type: "DELETE",
+        data: props 
     }
 }
 
 export const changeCreateContactStatus = () => {
     return{
         type: "CLICKEDCREATE"
+    }
+}
+
+export const saveEditedContact = (props: {}) => {
+    return{
+        type: "EDITED",
+        data: props
     }
 }

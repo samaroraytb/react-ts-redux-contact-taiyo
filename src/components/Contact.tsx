@@ -3,6 +3,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import CreateContact from "./CreateContact";
 import { changeCreateContactStatus } from "../redux/actions";
 import ContactItems from "./ContactItems";
+import EditContact from './EditContact'
 
 const Contact = () => {
   const selectorObject = useSelector(
@@ -11,12 +12,13 @@ const Contact = () => {
   const isContactAvailable = selectorObject.contactList.length === 0;
 
   const isCreateFormClicked = selectorObject.isCreateContact;
+  const isEditItemClicked = selectorObject.isEditContact;
 
   const dispatchFn = useDispatch();
 
   const renderNoContactAvailable = () => {
     return (
-      <div className="p-5 flex flex-col items-center h-[75vh] md:h-screen w-full justify-center text-[#36454F]">
+      <div className="bg-[#F3F3F3] p-5 flex flex-col items-center md:h-screen md:w-full justify-center text-[#36454F]">
         <button
           type="button"
           className="font-bold md:text-2xl text-1xl bg-[#00E8FF] px-[20px] py-[15px] rounded-[15px] hover:bg-[#f4544c] hover:text-white"
@@ -25,7 +27,7 @@ const Contact = () => {
           Create Contact
         </button>
 
-        <div className="flex items-center border border-grey shadow p-5 rounded-lg mt-10">
+        <div className="bg-white flex items-center border border-grey shadow p-5 rounded-lg mt-10">
           <RxCrossCircled className="mr-[15px] text-4xl " />
           <div>
             <h1 className="font-[500] text-[20px]">No Contact Found</h1>
@@ -46,8 +48,8 @@ const Contact = () => {
 
   const contactListItem = () => {
     return (
-      <div className="flex  flex-col md:h-screen md:w-full items-center">
-        <ul className="p-5 md:overflow-auto flex flex-wrap md:justify-start mb-[50px] md:mb-[100px] justify-center">
+      <div className="bg-[#F3F3F3] flex  flex-col md:h-screen md:w-full items-center">
+        <ul className="p-5 md:overflow-auto md:self-start flex flex-wrap md:justify-start justify-center mb-[50px] md:mb-[100px] ">
           {selectorObject.contactList.map(
             (eachItem: {
               id: string;
@@ -70,14 +72,22 @@ const Contact = () => {
     );
   };
 
+  const renderEditForm = () => {
+    return (
+      <div className="md:w-full">
+        <EditContact />
+      </div>
+    )
+  }
+
   return (
-    <>
+    <div className="w-full min-h-screen bg-[#F3F3F3]">
       {isCreateFormClicked
         ? createFormRender()
         : isContactAvailable
         ? renderNoContactAvailable()
-        : contactListItem()}
-    </>
+        : (isEditItemClicked ? renderEditForm() : contactListItem())}
+    </div>
   );
 };
 
