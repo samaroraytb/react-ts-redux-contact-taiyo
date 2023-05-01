@@ -1,8 +1,9 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom'
 import Home from './components/Home';
-import Dashboard from './components/Dashboard';
 import CreateContact from './components/CreateContact'
+import Dashboard from './components/Dashboard';
+
 
 function App() {
   return (
